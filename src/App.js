@@ -22,24 +22,17 @@ class App extends React.Component {
     });
   };
 
-  // handleGenderSubmit = event => {
-  //   alert('A gender was submitted: ' + this.state.gender);
-  //   event.preventDefault();
-  // }
-
   render() {
     return (
       <div>
 
         <div>
           <h1>직업 가치관 검사</h1>
-          {/* onSubmit={this.handleNameSubmit} */}
             <form> 
               <label>
                 Name:
                   <input type="text" value={this.state.value} onChange={this.handleNameChange} />
               </label>
-              {/* <input type="submit" value="Submit" /> */}
             </form>
         </div>
 
@@ -70,12 +63,6 @@ class App extends React.Component {
             남성
           </label>
         </div>
-
-        {/* <div className="form-group">
-          <button className="btn btn-primary mt-2" type="submit" onClick={this.handleGenderSubmit}>
-            Gender_Submit
-          </button>
-        </div> */}
 
         <div>
           <h1> 성별: {this.state.gender}</h1>

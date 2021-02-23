@@ -22,6 +22,12 @@ class App extends React.Component {
     });
   };
 
+  handleSubmit = () => {
+    alert("submitted!");
+  }
+
+
+
   render() {
     return (
       <div>
@@ -67,6 +73,12 @@ class App extends React.Component {
         <div>
           <h1> 성별: {this.state.gender}</h1>
           <h3> 이름: {this.state.name}</h3>
+        </div>
+
+        <div>
+          <button type="submit" disabled={this.state.gender.length < 1 || this.state.name.length < 1} onClick={this.handleSubmit} >
+            검사 시작
+          </button>
         </div>
 
       </div>

@@ -15,10 +15,6 @@ class App extends React.Component {
     this.setState({name: event.target.value});
   }
 
-  // handleNameSubmit = event => {
-  //   alert('A name was submitted: ' + this.state.name);
-  //   event.preventDefault();
-  // }
 
   handleGenderChange = event => {
     this.setState({
@@ -57,7 +53,7 @@ class App extends React.Component {
               onChange={this.handleGenderChange}
               className="form-check-input"
             />
-            woman
+            여성
           </label>
         </div>
 
@@ -71,7 +67,7 @@ class App extends React.Component {
               onChange={this.handleGenderChange}
               className="form-check-input"
             />
-            man
+            남성
           </label>
         </div>
 

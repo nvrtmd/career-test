@@ -14,12 +14,10 @@ function Example() {
         async function exQuestion(){
             const response = await axios.get(
                 `https://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`
-            )
-            .then(response => {
-                setQuestion(response.data.RESULT[0].question)
-                setAnswer1(response.data.RESULT[0].answer01)
-                setAnswer2(response.data.RESULT[0].answer02)
-            }); //예제 질문
+            );
+            setQuestion(response.data.RESULT[0].question);
+            setAnswer1(response.data.RESULT[0].answer01);
+            setAnswer2(response.data.RESULT[0].answer02);
         }
         exQuestion();
     }, [])

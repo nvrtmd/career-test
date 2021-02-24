@@ -65,7 +65,7 @@ function Example() {
             </div>
 
             <div>
-                <Link to="/example">
+                <Link to="/test">
                 <button type="submit" disabled={!exChecked} onClick={handleSubmit} >
                 검사 시작
                 </button>

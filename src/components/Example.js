@@ -9,11 +9,11 @@ function Example() {
     const [exAnswer1, setAnswer1] = useState("")
     const [exAnswer2, setAnswer2] = useState("")
     const [exChecked, setChecked] = useState("")
-    
+    const apiUrl = `https://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`
     useEffect(() => {
         async function exQuestion(){
             const response = await axios.get(
-                `https://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`
+               apiUrl
             );
             setQuestion(response.data.RESULT[0].question);
             setAnswer1(response.data.RESULT[0].answer01);
@@ -23,6 +23,7 @@ function Example() {
     }, [])
 
     const handleCheckedChange = event => {
+        console.log(event.target.value)
         setChecked(event.target.value)
     }
     const handleSubmit = () => {

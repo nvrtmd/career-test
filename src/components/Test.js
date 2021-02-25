@@ -1,71 +1,75 @@
 import axios from "axios";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback, useMemo, useRef} from "react";
 import { Link } from 'react-router-dom'
 
-function Test() {
-    const [contents, setContents] = useState("");
+const Test = () => {
+    const apiUrl = `http://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`;
+    const [questions, setQuestions] = useState([]);
+    const [page, setPage] = useState(0);
+    const [answChecked, setAnswChecked] = useState(0);
+
+    const fetchQuestions = useCallback(async () => {
+        const response = await axios.get(apiUrl);
+        setQuestions(response.data.RESULT);
+    }, [apiUrl])
+
+    const visibleQuestions = useMemo(() => {
+        return questions.slice(page * 5, (page + 1) * 5); 
+    }, [page, questions])
 
     useEffect(() => {
-        async function contents(){
-            const response = await axios.get(
-                `http://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`
-            );
-            // console.log(response.data.RESULT)
-            setContents(response.data.RESULT);
-        }
-        contents();
-    }, [])
+        fetchQuestions();
+    }, [fetchQuestions]);
 
-    const array = contents;
-    const questionArr = [];
-    const answ01Arr = [];
-    const answ02Arr = [];
+    // var answer = 0;
+    const handleCheckedChange = (e) => {
+        // answer += 1;
+        // console.log(answer)
+        // setAnswChecked(answer);
+        console.log(e.target.value)
+    };
 
-    for(var i = 0; i< array.length; i++){
-        questionArr.push(array[i].question)
-        answ01Arr.push(array[i].answer01)
-        answ02Arr.push(array[i].answer02)
+    const handlePageChange = () => {
+        setPage((current) => {
+            return current + 1
+        });
+        setAnswChecked(0)
     }
-    return(
+
+    return (<div>
+        {/* {JSON.stringify(questions)} */}
+        {/* {visibleQuestions.map((qitemNo)=>{
+            return <div key={qitemNo.qitemNo}>{qitemNo.qitemNo}</div>
+        })} */}
         <div>
-            <h1>TEST</h1>
-            <div>
-                <form>
+            {visibleQuestions.map((question)=>{
+                return (
                     <div>
-                    {questionArr[0]}
+                        <div key={question.qitemNo}>{question.question}</div>
+                        <form>
+                        <label>
+                                <input type="radio" name="select" value={question.answerScore01} onChange={handleCheckedChange}></input>
+                                {question.answer01}
+                            </label>
+
+                            <label>
+                                <input type="radio" name="select" value={question.answerScore02} onChange={handleCheckedChange}></input>
+                                {question.answer02}
+                            </label>
+                        </form>
+
                     </div>
-
-                    <label>
-                        <input type="radio" name="q1" value={answ01Arr[0]}></input>
-                        {answ01Arr[0]}
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value={answ02Arr[0]}></input>
-                        {answ02Arr[0]}
-                    </label>
-                </form>
-            </div>
-
-            <div>
-                <form>
-                    <div>
-                    {questionArr[1]}
-                    </div>
-
-                    <label>
-                        <input type="radio" name="q1" value={answ01Arr[1]}></input>
-                        {answ01Arr[1]}
-                    </label>
-                    <label>
-                        <input type="radio" name="q1" value={answ02Arr[1]}></input>
-                        {answ02Arr[1]}
-                    </label>
-                </form>
-            </div>
-
+                    
+                    ) 
+            })}
+            
         </div>
+        <button
+            disabled={answChecked < 3} 
+            onClick={handlePageChange}
+        >다음 페이지</button>
+
+    </div>
     );
 }
-
-
 export default Test;

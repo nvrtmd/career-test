@@ -40,7 +40,7 @@ const Test = () => {
     //}
 
     //const a = useMemo(()=> {return k}, [answChecked]) //2. useMemo를 사용해 answChecked 값 변할 때마다 k 함수 실행하게 함
- //4. 근데 countAnswChecked를 찍어봤더니 계속 같은 값(0)만 찍힘...왜지?ㅠㅠ
+ //4. 근데 countAnswChecked를 찍어봤더니 계속 같은 값(0)만 찍힘...왜지?ㅠㅠ??
 
 
     const handlePageChange = () => {
@@ -96,7 +96,7 @@ const Test = () => {
             
         </div>
         <button
-            // disabled={countAnswChecked.length < 5} 
+            // disabled={countAnswChecked.length % 5 < 5} 
             onClick={handlePageChange}
         >다음 페이지</button>
 

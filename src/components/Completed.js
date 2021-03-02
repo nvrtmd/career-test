@@ -16,9 +16,6 @@ function Completed() {
           결과 보기
         </button>
       </Link>
-      <Link to="/">
-      <button>이전</button>
-    </Link>
 
     </div>
     

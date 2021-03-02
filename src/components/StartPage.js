@@ -1,11 +1,15 @@
 import React, {useState, useContext} from "react";
 import { Link } from 'react-router-dom'
 import userInfo from "../context/Context";
+import {NameContext, GenderContext} from "../App"
+
 
 function StartPage() {
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
-    const user = useContext(userInfo)
+//   const [name, setName] = useState("");
+  const {name, setName} = useContext(NameContext)
+  const {gender, setGender} = useContext(GenderContext)
+//   const [gender, setGender] = useState("");
+    // const user = useContext(userInfo)
   
     const handleNameChange = event => {
         setName(event.target.value);
@@ -17,7 +21,7 @@ function StartPage() {
     };
 
     const handleSubmit = () => {
-        alert("submitted!");
+        console.log("submitted!");
     }
 
   return (

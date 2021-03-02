@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
@@ -27,7 +27,7 @@ function Example() {
         setChecked(event.target.value)
     }
     const handleSubmit = () => {
-        alert("submitted!");
+        console.log("submitted!");
     }
 
     return (
@@ -38,7 +38,7 @@ function Example() {
                 </div>
 
             <div>
-                <h3>{question}</h3>
+            <h3>{question}</h3>
             </div>
 
             <form>
@@ -53,9 +53,9 @@ function Example() {
                 </label>
             </form>
 
-            <div>
+            {/* <div>
                 <h1> {exChecked}</h1>
-            </div>
+            </div> */}
 
             <div>
                 <Link to="/">

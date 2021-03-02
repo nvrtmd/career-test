@@ -58,7 +58,6 @@ const Test = () => {
       return newAnswChecked;
     })
     // console.log(answChecked)
-
   };
 
   // const handlePageToFinish = () => { //제출 버튼 클릭 시 post할 수 있게

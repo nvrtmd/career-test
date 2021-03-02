@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { Link } from 'react-router-dom'
+import userInfo from "../context/Context";
 
 function StartPage() {
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
-
+    const user = useContext(userInfo)
+  
     const handleNameChange = event => {
         setName(event.target.value);
     }

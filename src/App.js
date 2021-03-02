@@ -6,20 +6,31 @@ import Test from "./components/Test";
 import Completed from "./components/Completed";
 import Result from "./components/Result";
 import userInfo from './context/Context';
+import {createContext, useState} from "react"
+
+const NameContext = createContext({});
+const GenderContext = createContext({});
 
 function App() {
+  const [name, setName] = useState("")
+  const [gender, setGender] = useState("")
 
   return (
     <main>
-      <Switch>
-        <Route path="/" component={StartPage} exact />
-        <Route path="/example" component={Example} exact />
-        <Route path="/test" component={Test} exact />
-        <Route path="/completed" component={Completed} exact />
-        <Route path="/result/:seq" component={Result} exact />
-      </Switch>
+      <NameContext.Provider value={{name, setName}}>
+        <GenderContext.Provider value={{gender, setGender}}>
+        <Switch>
+          <Route path="/" component={StartPage} exact />
+          <Route path="/example" component={Example} exact />
+          <Route path="/test" component={Test} exact />
+          <Route path="/completed/:seq" component={Completed} exact />
+          <Route path="/result/:seq" component={Result} exact />
+        </Switch>
+        </GenderContext.Provider>
+      </NameContext.Provider>
     </main>
   );
 }
+export {NameContext , GenderContext}
 
 export default App;

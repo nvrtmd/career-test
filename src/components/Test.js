@@ -1,12 +1,17 @@
 import axios from "axios";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 // import StartPage from "./components/StartPage";
 // import Example from "./components/Example";
+import React, { Component } from "react";
+import {NameContext, GenderContext} from "../App"
 
 const Test = () => {
   const apiUrl = `http://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`;
   const apiPostUrl = `http://www.career.go.kr/inspct/openapi/test/report`
+  const {name, setName} = useContext(NameContext)
+  const {gender, setGender} = useContext(GenderContext)
+
   const [questions, setQuestions] = useState([]);
   const [page, setPage] = useState(0);
   const [answChecked, setAnswChecked] = useState([]);
@@ -60,26 +65,25 @@ const Test = () => {
     // console.log(answChecked)
   };
 
-  // const handlePageToFinish = () => { //제출 버튼 클릭 시 post할 수 있게
-  //   const res = await axios.post(apiPostUrl, {
-  //     apikey: "ad5bf9f6a1f7c1af90eff9aed50ee117",
-  //     qestrnSeq: "6",
-  //     trgetSe: "100209",
-  //     name: "",
-  //     gender: "",
-  //     startDtm: new Date().getTime(),
-  //     answers: answChecked.map((item, index) => {
-  //       return "B" + (index + 1) + "=" + item;
-  //     }).join(" "),
+  const handlePageToFinish = async () => {  //제출 버튼 클릭 시 post할 수 있게
+    const res = await axios.post(apiPostUrl, {
+      apikey: "ad5bf9f6a1f7c1af90eff9aed50ee117",
+      qestrnSeq: "6",
+      trgetSe: "100209",
+      name: name,
+      gender: gender,
+      startDtm: new Date().getTime(),
+      answers: answChecked.map((item, index) => {
+        return "B" + (index + 1) + "=" + item;
+      }).join(" "),
 
-  //   }
-      
-  //   );
-  //   const seq = res.data.RESULT.url.split("seq=").pop();
-  //   //사용자의 주소를 /result/:seq로 이동시킨다
-  //   history.push("/result/" + seq)
+    }, { headers: { 'Content-Type': 'application/json' } }
+    );
+    const seq = res.data.RESULT.url.split("seq=").pop();
+    //사용자의 주소를 /result/:seq로 이동시킨다
+    history.push("/completed/" + seq)
 
-  // }
+  }
 
   return (
     <div>
@@ -172,7 +176,7 @@ const Test = () => {
       ) : (
         <Link to="/completed">
         <button
-          // onClick={handlePageToFinish}
+          onClick={handlePageToFinish}
           disabled={
             countAnswChecked != 0 && countAnswChecked % 7 === 0 ? false : true
           }

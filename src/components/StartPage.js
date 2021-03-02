@@ -17,7 +17,7 @@ function StartPage() {
     };
 
     const handleSubmit = () => {
-        alert("submitted!");
+        console.log("submitted!");
     }
 
   return (
@@ -55,10 +55,10 @@ function StartPage() {
             </form>
         </div>
 
-        <div>
+        {/* <div>
             <h1> 성별: {gender}</h1>
             <h3> 이름: {name}</h3>
-        </div>
+        </div> */}
 
         <div>
         <Link to="/example">

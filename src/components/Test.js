@@ -49,6 +49,16 @@ const Test = () => {
     setPage((current) => {
       return current - 1;
     });
+    const idx = page * 5
+    setAnswChecked((current) => {
+      const newAnswChecked = []
+      for(var i = 0; i < idx; i++){
+        newAnswChecked[i] = answChecked[i];
+      }
+      return newAnswChecked;
+    })
+    // console.log(answChecked)
+
   };
 
   // const handlePageToFinish = () => { //제출 버튼 클릭 시 post할 수 있게
@@ -79,7 +89,7 @@ const Test = () => {
             return <div key={qitemNo.qitemNo}>{qitemNo.qitemNo}</div>
         })} */}
       <div>
-        {page}
+        {/* {page} */}
         {visibleQuestions.map((question) => {
           const qitemNo = parseInt(question.qitemNo, 10);
           return (

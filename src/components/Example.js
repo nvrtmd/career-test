@@ -27,7 +27,7 @@ function Example() {
         setChecked(event.target.value)
     }
     const handleSubmit = () => {
-        alert("submitted!");
+        console.log("submitted!");
     }
 
     return (
@@ -53,9 +53,9 @@ function Example() {
                 </label>
             </form>
 
-            <div>
+            {/* <div>
                 <h1> {exChecked}</h1>
-            </div>
+            </div> */}
 
             <div>
                 <Link to="/">

@@ -21,16 +21,20 @@ function Result() {
   const { name, setName } = useContext(NameContext);
   const { gender, setGender } = useContext(GenderContext);
   const params = useParams();
-  const [wonScore, setWonScore] = useState();
+  const [wonScore, setWonScore] = useState([]);
   const seq = params.seq;
   const [testDate, setTestDate] = useState("");
-  const [apiUrlNo1, setApiUrlNo1] = useState();
-  const [apiUrlNo2, setApiUrlNo2] = useState();
+  const [apiUrlNo1, setApiUrlNo1] = useState("");
+  const [apiUrlNo2, setApiUrlNo2] = useState("");
   const apiReportUrl =
     `https://inspct.career.go.kr/inspct/api/psycho/report?seq=` + seq;
-  const apiMajorsUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${apiUrlNo1}&no2=${apiUrlNo2}`;
+  const apiMajorsUrl = useMemo(() => {
+    return `https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${apiUrlNo1}&no2=${apiUrlNo2}`;
+  }, [apiUrlNo1, apiUrlNo2]);
 
-  const apiJobsUrl = `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${apiUrlNo1}&no2=${apiUrlNo2}`;
+  const apiJobsUrl = useMemo(() => {
+    return `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${apiUrlNo1}&no2=${apiUrlNo2}`;
+  }, [apiUrlNo1, apiUrlNo2]);
 
   const getReportResult = useCallback(async () => {
     const reportRes = await axios.get(apiReportUrl);
@@ -38,14 +42,33 @@ function Result() {
     setTestDate(testBeginDtm.split("T")[0]);
 
     const resWonScore = reportRes.data.result.wonScore.split(" ");
+    console.log(resWonScore)
     resWonScore.pop();
-    const wonScoreArr = [];
-    for (var i = 0; i < resWonScore.length; i++) {
-      wonScoreArr.push(resWonScore[i].split("=")[1]);
-    }
-    console.log(wonScoreArr);
+    console.log(resWonScore)
 
-    setWonScore(wonScoreArr);
+
+    // const wonScoreArr = [];
+    // for (var i = 0; i < resWonScore.length; i++) {
+    //     const variable = resWonScore[i].split("=")[1]
+    //   wonScoreArr.push(variable);
+    // }
+    // console.log(wonScoreArr);
+
+    // setWonScore((current) => {
+    //     const newWonScoreArr = [...wonScoreArr]
+    //     return newWonScoreArr
+    // })
+    setWonScore((current) => {
+        for (var i = 0; i < resWonScore.length; i++) {
+            const variable = resWonScore[i].split("=")[1]
+          current.push(variable);
+        }
+        return current
+        // const newWonScoreArr = [...wonScoreArr]
+        // return newWonScoreArr
+    })
+
+    // setWonScore(wonScoreArr);
     console.log(wonScore);
 
     const sortedWonScore = [...wonScore];
@@ -54,18 +77,38 @@ function Result() {
     });
     console.log(sortedWonScore);
 
-    var sortedWonScore1stMax = sortedWonScore[0];
+    const sortedWonScore1stMax = sortedWonScore[0];
     console.log(sortedWonScore1stMax);
-    var sortedWonScore2ndMax = sortedWonScore[1];
+    // console.log(typeof(sortedWonScore1stMax));
+    const sortedWonScore2ndMax = sortedWonScore[1];
     console.log(sortedWonScore2ndMax);
 
-    const sortedWonScore1stMaxIdx= wonScore.indexOf(sortedWonScore1stMax) + 1;
-    const sortedWonScore2ndMaxIdx = wonScore.indexOf(sortedWonScore2ndMax) + 1;
+    if (sortedWonScore1stMax === sortedWonScore2ndMax) {
+      const sortedWonScore1stMaxIdx =
+        wonScore.indexOf(sortedWonScore1stMax) + 1;
+        console.log(sortedWonScore1stMaxIdx)
+      const sortedWonScore2ndMaxIdx =
+        wonScore.lastIndexOf(sortedWonScore2ndMax) + 1;
+        console.log(sortedWonScore2ndMaxIdx)
 
-    setApiUrlNo1(sortedWonScore1stMaxIdx);
-    setApiUrlNo2(sortedWonScore2ndMaxIdx);
+      return(setApiUrlNo1(sortedWonScore1stMaxIdx), setApiUrlNo2(sortedWonScore2ndMaxIdx))
+    } else {
+      const sortedWonScore1stMaxIdx =
+        wonScore.indexOf(sortedWonScore1stMax) + 1;
+        console.log(sortedWonScore1stMaxIdx)
 
+      const sortedWonScore2ndMaxIdx =
+        wonScore.indexOf(sortedWonScore2ndMax) + 1;
+        console.log(sortedWonScore2ndMaxIdx)
+
+        return(setApiUrlNo1(sortedWonScore1stMaxIdx), setApiUrlNo2(sortedWonScore2ndMaxIdx))
+        console.log(apiUrlNo1)
+      console.log(apiUrlNo2)
+      }
   }, [apiReportUrl]);
+//   console.log(apiUrlNo1)
+//   console.log(apiUrlNo2)
+//   console.log(apiMajorsUrl)
 
   const getMajorsResult = useCallback(async () => {
     const majorsRes = await axios.get(apiMajorsUrl);
@@ -77,7 +120,6 @@ function Result() {
     console.log(jobsRes);
   }, [apiJobsUrl]);
 
-  // })
 
   useEffect(() => {
     getReportResult();
@@ -91,41 +133,43 @@ function Result() {
     getJobsResult();
   }, [getJobsResult]);
 
-  const chartData = [
-    {
-      name: "능력발휘",
-      score: wonScore[0]
-    },
-    {
-      name: "자율성",
-      score: wonScore[1]
-    },
-    {
-      name: "보수",
-      score: wonScore[2]
-    },
-    {
-      name: "안정성",
-      score: wonScore[3]
-    },
-    {
-      name: "사회적 인정",
-      score: wonScore[4]
-    },
-    {
-      name: "사회봉사",
-      score: wonScore[5]
-    },
-    {
-      name: "자기계발",
-      score: wonScore[6]
-    },
-    {
-      name: "창의성",
-      score: wonScore[7]
-    },
-  ];
-
+  const chartData = useMemo(() => {
+      return ( [
+        {
+          name: "능력발휘",
+          score: wonScore[0],
+        },
+        {
+          name: "자율성",
+          score: wonScore[1],
+        },
+        {
+          name: "보수",
+          score: wonScore[2],
+        },
+        {
+          name: "안정성",
+          score: wonScore[3],
+        },
+        {
+          name: "사회적 인정",
+          score: wonScore[4],
+        },
+        {
+          name: "사회봉사",
+          score: wonScore[5],
+        },
+        {
+          name: "자기계발",
+          score: wonScore[6],
+        },
+        {
+          name: "창의성",
+          score: wonScore[7],
+        },
+      ])
+   
+  }, [apiUrlNo1, apiUrlNo2]);
 
   return (
     <div>
@@ -141,13 +185,13 @@ function Result() {
       <h3>검사일: {testDate}</h3>
       <h3>이름: {name}</h3>
       {gender === "100324" ? <h3>성별: 여성</h3> : <h3>성별: 남성</h3>}
-      {/* <h4>{apiUrlNo1}</h4>
+      <h4>{apiUrlNo1}</h4>
       <h4>{apiUrlNo2}</h4>
- */}
+
       <h2>직업가치관결과</h2>
       <BarChart
-        width={800}
-        height={300}
+        width={1000}
+        height={400}
         data={chartData}
         margin={{
           top: 5,

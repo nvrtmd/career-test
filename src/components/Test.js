@@ -4,13 +4,13 @@ import { Link, useHistory } from "react-router-dom";
 // import StartPage from "./components/StartPage";
 // import Example from "./components/Example";
 import React, { Component } from "react";
-import {NameContext, GenderContext} from "../App"
+import { NameContext, GenderContext } from "../App";
 
 const Test = () => {
   const apiUrl = `http://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`;
-  const apiPostUrl = `http://www.career.go.kr/inspct/openapi/test/report`
-  const {name, setName} = useContext(NameContext)
-  const {gender, setGender} = useContext(GenderContext)
+  const apiPostUrl = `http://www.career.go.kr/inspct/openapi/test/report`;
+  const { name, setName } = useContext(NameContext);
+  const { gender, setGender } = useContext(GenderContext);
 
   const [questions, setQuestions] = useState([]);
   const [page, setPage] = useState(0);
@@ -18,7 +18,6 @@ const Test = () => {
   // const [countAnswChecked,setCountAnswChecked] = useState();
   // const [result, setResult] = useState();
   const history = useHistory();
-
 
   const fetchQuestions = useCallback(async () => {
     const response = await axios.get(apiUrl);
@@ -49,41 +48,44 @@ const Test = () => {
     });
   };
 
-
   const handlePagePrev = () => {
     setPage((current) => {
       return current - 1;
     });
-    const idx = page * 5
+    const idx = page * 5;
     setAnswChecked((current) => {
-      const newAnswChecked = []
-      for(var i = 0; i < idx; i++){
+      const newAnswChecked = [];
+      for (var i = 0; i < idx; i++) {
         newAnswChecked[i] = answChecked[i];
       }
       return newAnswChecked;
-    })
+    });
     // console.log(answChecked)
   };
 
-  const handlePageToFinish = async () => {  //제출 버튼 클릭 시 post할 수 있게
-    const res = await axios.post(apiPostUrl, {
-      apikey: "ad5bf9f6a1f7c1af90eff9aed50ee117",
-      qestrnSeq: "6",
-      trgetSe: "100209",
-      name: name,
-      gender: gender,
-      startDtm: new Date().getTime(),
-      answers: answChecked.map((item, index) => {
-        return "B" + (index + 1) + "=" + item;
-      }).join(" "),
-
-    }, { headers: { 'Content-Type': 'application/json' } }
+  const handlePageToFinish = async () => {
+    //제출 버튼 클릭 시 post할 수 있게
+    const res = await axios.post(
+      apiPostUrl,
+      {
+        apikey: "ad5bf9f6a1f7c1af90eff9aed50ee117",
+        qestrnSeq: "6",
+        trgetSe: "100209",
+        name: name,
+        gender: gender,
+        startDtm: new Date().getTime(),
+        answers: answChecked
+          .map((item, index) => {
+            return "B" + (index + 1) + "=" + item;
+          })
+          .join(" "),
+      },
+      { headers: { "Content-Type": "application/json" } }
     );
     const seq = res.data.RESULT.url.split("seq=").pop();
     //사용자의 주소를 /result/:seq로 이동시킨다
-    history.push("/completed/" + seq)
-
-  }
+    history.push("/completed/" + seq);
+  };
 
   return (
     <div>
@@ -157,9 +159,7 @@ const Test = () => {
         <button onClick={handlePagePrev}>이전</button>
       ) : (
         <Link to="/example">
-          <button>
-            이전
-          </button>
+          <button>이전</button>
         </Link>
       )}
 
@@ -168,21 +168,25 @@ const Test = () => {
         <button
           onClick={handlePageNext}
           disabled={
-            countAnswChecked != 0 && countAnswChecked % 5 === 0 && countAnswChecked / 5 - 1 === page ? false : true
+            countAnswChecked != 0 &&
+            countAnswChecked % 5 === 0 &&
+            countAnswChecked / 5 - 1 === page
+              ? false
+              : true
           }
         >
           다음 페이지
         </button>
       ) : (
         <Link to="/completed">
-        <button
-          onClick={handlePageToFinish}
-          disabled={
-            countAnswChecked != 0 && countAnswChecked % 7 === 0 ? false : true
-          }
-        >
-          제출하기
-        </button>
+          <button
+            onClick={handlePageToFinish}
+            disabled={
+              countAnswChecked != 0 && countAnswChecked % 7 === 0 ? false : true
+            }
+          >
+            제출하기
+          </button>
         </Link>
       )}
     </div>

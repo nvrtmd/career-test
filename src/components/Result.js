@@ -17,6 +17,34 @@ import {
   Legend,
 } from "recharts";
 
+
+function JobsResult(props) {
+  console.log(props.jobsGroup)
+  console.log(props.jobsData)
+
+
+  return (
+    <>
+    <h3>{props.jobsGroup}</h3>
+    <h3>{props.jobsData}</h3>
+    </>
+  );
+}
+
+function MajorsResult(props) {
+
+
+  return (
+    <>
+    <h3>{props.majorsGroup}</h3>
+    <h3>{props.majorsData}</h3>
+    </>
+
+  );
+}
+
+
+
 function Result() {
   const { name, setName } = useContext(NameContext);
   const { gender, setGender } = useContext(GenderContext);
@@ -26,6 +54,8 @@ function Result() {
   const [testDate, setTestDate] = useState("");
   const [apiUrlNo1, setApiUrlNo1] = useState("");
   const [apiUrlNo2, setApiUrlNo2] = useState("");
+  const [jobsData, setJobsData] = useState([])
+  const [majorsData, setMajorsData] = useState([])
   const apiReportUrl =
     `https://inspct.career.go.kr/inspct/api/psycho/report?seq=` + seq;
   const apiMajorsUrl = useMemo(() => {
@@ -35,6 +65,9 @@ function Result() {
   const apiJobsUrl = useMemo(() => {
     return `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${apiUrlNo1}&no2=${apiUrlNo2}`;
   }, [apiUrlNo1, apiUrlNo2]);
+
+  const jobsClassName = ['중졸이하','고졸','전문대졸','대졸','대학원졸'];
+  const majorsClassName = ['계열무관','인문','사회','교육','공학','자연','의학','예체능'];
 
   const getReportResult = useCallback(async () => {
     const reportRes = await axios.get(apiReportUrl);
@@ -47,17 +80,6 @@ function Result() {
     console.log(resWonScore)
 
 
-    // const wonScoreArr = [];
-    // for (var i = 0; i < resWonScore.length; i++) {
-    //     const variable = resWonScore[i].split("=")[1]
-    //   wonScoreArr.push(variable);
-    // }
-    // console.log(wonScoreArr);
-
-    // setWonScore((current) => {
-    //     const newWonScoreArr = [...wonScoreArr]
-    //     return newWonScoreArr
-    // })
     setWonScore((current) => {
         for (var i = 0; i < resWonScore.length; i++) {
             const variable = resWonScore[i].split("=")[1]
@@ -112,12 +134,14 @@ function Result() {
 
   const getMajorsResult = useCallback(async () => {
     const majorsRes = await axios.get(apiMajorsUrl);
-    console.log(majorsRes);
+    setMajorsData(majorsRes.data)
+    // console.log(majorsRes);
   }, [apiMajorsUrl]);
 
   const getJobsResult = useCallback(async () => {
     const jobsRes = await axios.get(apiJobsUrl);
-    console.log(jobsRes);
+    setJobsData(jobsRes.data)
+    // console.log(jobsRes);
   }, [apiJobsUrl]);
 
 
@@ -206,6 +230,15 @@ function Result() {
         <Tooltip />
         <Bar dataKey="score" fill="#8884d8" />
       </BarChart>
+
+
+        <JobsResult jobsGroup={jobsClassName} jobsData={jobsData}/>
+        <MajorsResult majorsGroup={majorsClassName} majorsData={majorsData}/>
+
+
+
+
+
     </div>
   );
 }

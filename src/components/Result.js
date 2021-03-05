@@ -17,34 +17,6 @@ import {
   Legend,
 } from "recharts";
 
-
-function JobsResult(props) {
-  console.log(props.jobsGroup)
-  console.log(props.jobsData)
-
-
-  return (
-    <>
-    <h3>{props.jobsGroup}</h3>
-    <h3>{props.jobsData}</h3>
-    </>
-  );
-}
-
-function MajorsResult(props) {
-
-
-  return (
-    <>
-    <h3>{props.majorsGroup}</h3>
-    <h3>{props.majorsData}</h3>
-    </>
-
-  );
-}
-
-
-
 function Result() {
   const { name, setName } = useContext(NameContext);
   const { gender, setGender } = useContext(GenderContext);
@@ -54,8 +26,8 @@ function Result() {
   const [testDate, setTestDate] = useState("");
   const [apiUrlNo1, setApiUrlNo1] = useState("");
   const [apiUrlNo2, setApiUrlNo2] = useState("");
-  const [jobsData, setJobsData] = useState([])
-  const [majorsData, setMajorsData] = useState([])
+  const [jobsData, setJobsData] = useState([]);
+  const [majorsData, setMajorsData] = useState([]);
   const apiReportUrl =
     `https://inspct.career.go.kr/inspct/api/psycho/report?seq=` + seq;
   const apiMajorsUrl = useMemo(() => {
@@ -66,8 +38,17 @@ function Result() {
     return `https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${apiUrlNo1}&no2=${apiUrlNo2}`;
   }, [apiUrlNo1, apiUrlNo2]);
 
-  const jobsClassName = ['중졸이하','고졸','전문대졸','대졸','대학원졸'];
-  const majorsClassName = ['계열무관','인문','사회','교육','공학','자연','의학','예체능'];
+  const jobsClassNames = ["중졸이하", "고졸", "전문대졸", "대졸", "대학원졸"];
+  const majorsClassNames = [
+    "계열무관",
+    "인문",
+    "사회",
+    "교육",
+    "공학",
+    "자연",
+    "의학",
+    "예체능",
+  ];
 
   const getReportResult = useCallback(async () => {
     const reportRes = await axios.get(apiReportUrl);
@@ -75,20 +56,19 @@ function Result() {
     setTestDate(testBeginDtm.split("T")[0]);
 
     const resWonScore = reportRes.data.result.wonScore.split(" ");
-    console.log(resWonScore)
+    console.log(resWonScore);
     resWonScore.pop();
-    console.log(resWonScore)
-
+    console.log(resWonScore);
 
     setWonScore((current) => {
-        for (var i = 0; i < resWonScore.length; i++) {
-            const variable = resWonScore[i].split("=")[1]
-          current.push(variable);
-        }
-        return current
-        // const newWonScoreArr = [...wonScoreArr]
-        // return newWonScoreArr
-    })
+      for (var i = 0; i < resWonScore.length; i++) {
+        const variable = resWonScore[i].split("=")[1];
+        current.push(variable);
+      }
+      return current;
+      // const newWonScoreArr = [...wonScoreArr]
+      // return newWonScoreArr
+    });
 
     // setWonScore(wonScoreArr);
     console.log(wonScore);
@@ -108,42 +88,47 @@ function Result() {
     if (sortedWonScore1stMax === sortedWonScore2ndMax) {
       const sortedWonScore1stMaxIdx =
         wonScore.indexOf(sortedWonScore1stMax) + 1;
-        console.log(sortedWonScore1stMaxIdx)
+      console.log(sortedWonScore1stMaxIdx);
       const sortedWonScore2ndMaxIdx =
         wonScore.lastIndexOf(sortedWonScore2ndMax) + 1;
-        console.log(sortedWonScore2ndMaxIdx)
+      console.log(sortedWonScore2ndMaxIdx);
 
-      return(setApiUrlNo1(sortedWonScore1stMaxIdx), setApiUrlNo2(sortedWonScore2ndMaxIdx))
+      return (
+        setApiUrlNo1(sortedWonScore1stMaxIdx),
+        setApiUrlNo2(sortedWonScore2ndMaxIdx)
+      );
     } else {
       const sortedWonScore1stMaxIdx =
         wonScore.indexOf(sortedWonScore1stMax) + 1;
-        console.log(sortedWonScore1stMaxIdx)
+      console.log(sortedWonScore1stMaxIdx);
 
       const sortedWonScore2ndMaxIdx =
         wonScore.indexOf(sortedWonScore2ndMax) + 1;
-        console.log(sortedWonScore2ndMaxIdx)
+      console.log(sortedWonScore2ndMaxIdx);
 
-        return(setApiUrlNo1(sortedWonScore1stMaxIdx), setApiUrlNo2(sortedWonScore2ndMaxIdx))
-        console.log(apiUrlNo1)
-      console.log(apiUrlNo2)
-      }
+      return (
+        setApiUrlNo1(sortedWonScore1stMaxIdx),
+        setApiUrlNo2(sortedWonScore2ndMaxIdx)
+      );
+      console.log(apiUrlNo1);
+      console.log(apiUrlNo2);
+    }
   }, [apiReportUrl]);
-//   console.log(apiUrlNo1)
-//   console.log(apiUrlNo2)
-//   console.log(apiMajorsUrl)
+  //   console.log(apiUrlNo1)
+  //   console.log(apiUrlNo2)
+  //   console.log(apiMajorsUrl)
 
   const getMajorsResult = useCallback(async () => {
     const majorsRes = await axios.get(apiMajorsUrl);
-    setMajorsData(majorsRes.data)
-    // console.log(majorsRes);
+    setMajorsData(majorsRes.data);
+    console.log(majorsData);
   }, [apiMajorsUrl]);
 
   const getJobsResult = useCallback(async () => {
     const jobsRes = await axios.get(apiJobsUrl);
-    setJobsData(jobsRes.data)
-    // console.log(jobsRes);
+    setJobsData(jobsRes.data);
+    console.log(jobsData);
   }, [apiJobsUrl]);
-
 
   useEffect(() => {
     getReportResult();
@@ -158,41 +143,40 @@ function Result() {
   }, [getJobsResult]);
 
   const chartData = useMemo(() => {
-      return ( [
-        {
-          name: "능력발휘",
-          score: wonScore[0],
-        },
-        {
-          name: "자율성",
-          score: wonScore[1],
-        },
-        {
-          name: "보수",
-          score: wonScore[2],
-        },
-        {
-          name: "안정성",
-          score: wonScore[3],
-        },
-        {
-          name: "사회적 인정",
-          score: wonScore[4],
-        },
-        {
-          name: "사회봉사",
-          score: wonScore[5],
-        },
-        {
-          name: "자기계발",
-          score: wonScore[6],
-        },
-        {
-          name: "창의성",
-          score: wonScore[7],
-        },
-      ])
-   
+    return [
+      {
+        name: "능력발휘",
+        score: wonScore[0],
+      },
+      {
+        name: "자율성",
+        score: wonScore[1],
+      },
+      {
+        name: "보수",
+        score: wonScore[2],
+      },
+      {
+        name: "안정성",
+        score: wonScore[3],
+      },
+      {
+        name: "사회적 인정",
+        score: wonScore[4],
+      },
+      {
+        name: "사회봉사",
+        score: wonScore[5],
+      },
+      {
+        name: "자기계발",
+        score: wonScore[6],
+      },
+      {
+        name: "창의성",
+        score: wonScore[7],
+      },
+    ];
   }, [apiUrlNo1, apiUrlNo2]);
 
   return (
@@ -231,14 +215,43 @@ function Result() {
         <Bar dataKey="score" fill="#8884d8" />
       </BarChart>
 
+      <table>
+        <thead>
+          <tr>
+            <th>분야</th>
+            <th>직업</th>
+          </tr>
 
-        <JobsResult jobsGroup={jobsClassName} jobsData={jobsData}/>
-        <MajorsResult majorsGroup={majorsClassName} majorsData={majorsData}/>
-
-
-
-
-
+          {jobsClassNames.map((jobsClassName, jobsClassNameIdx) => {
+            const classifiedJobs = Array.from(majorsData).filter((jobs) => {
+              return jobs[2] === jobsClassNameIdx + 1;
+            });
+            return (
+              <>
+                <tr
+                  style={classifiedJobs.length <= 0 ? { display: "none" } : {}}
+                >
+                  <td>{jobsClassName}</td>
+                  <td>
+                    {classifiedJobs.map((classifiedJob) => {
+                      const classifiedJobName = classifiedJob[1];
+                      const classifiedJobSeq = classifiedJob[0];
+                      console.log(classifiedJob);
+                      return (
+                        <a
+                          href={`https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=${classifiedJobSeq}`}
+                        >
+                          {classifiedJobName}
+                        </a>
+                      );
+                    })}
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+        </thead>
+      </table>
     </div>
   );
 }

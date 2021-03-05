@@ -42,6 +42,7 @@ function StartPage() {
                     value="100324"
                     onChange={handleGenderChange}
                     className="form-check-input"
+                    checked={gender === "100324"}
                     />
                     여성
                 </label>
@@ -53,6 +54,8 @@ function StartPage() {
                     value="100323"
                     onChange={handleGenderChange}
                     className="form-check-input"
+                    checked={gender === "100323"}
+
                     />
                     남성
                 </label>

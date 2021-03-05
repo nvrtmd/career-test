@@ -5,7 +5,6 @@ import Example from "./components/Example";
 import Test from "./components/Test";
 import Completed from "./components/Completed";
 import Result from "./components/Result";
-import userInfo from './context/Context';
 import {createContext, useState} from "react"
 
 const NameContext = createContext({});

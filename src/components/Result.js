@@ -118,17 +118,19 @@ function Result() {
   //   console.log(apiUrlNo2)
   //   console.log(apiMajorsUrl)
 
-  const getMajorsResult = useCallback(async () => {
-    const majorsRes = await axios.get(apiMajorsUrl);
-    setMajorsData(majorsRes.data);
-    console.log(majorsData);
-  }, [apiMajorsUrl]);
 
   const getJobsResult = useCallback(async () => {
     const jobsRes = await axios.get(apiJobsUrl);
     setJobsData(jobsRes.data);
     console.log(jobsData);
   }, [apiJobsUrl]);
+
+  const getMajorsResult = useCallback(async () => {
+    const majorsRes = await axios.get(apiMajorsUrl);
+    setMajorsData(majorsRes.data);
+    console.log(majorsData);
+  }, [apiMajorsUrl]);
+
 
   useEffect(() => {
     getReportResult();
@@ -214,6 +216,8 @@ function Result() {
         <Tooltip />
         <Bar dataKey="score" fill="#8884d8" />
       </BarChart>
+      <h2>가치관과 관련이 높은 직업</h2>
+      <h3>종사자 평균 학력별</h3>
 
       <table>
         <thead>
@@ -223,7 +227,7 @@ function Result() {
           </tr>
 
           {jobsClassNames.map((jobsClassName, jobsClassNameIdx) => {
-            const classifiedJobs = Array.from(majorsData).filter((jobs) => {
+            const classifiedJobs = Array.from(jobsData).filter((jobs) => {
               return jobs[2] === jobsClassNameIdx + 1;
             });
             return (
@@ -234,15 +238,15 @@ function Result() {
                   <td>{jobsClassName}</td>
                   <td>
                     {classifiedJobs.map((classifiedJob) => {
-                      const classifiedJobName = classifiedJob[1];
-                      const classifiedJobSeq = classifiedJob[0];
-                      console.log(classifiedJob);
+                      const [classifiedJobSeq, classifiedJobName] = classifiedJob;
                       return (
                         <a
+                          style={{display:"inline-block", marginRight: 10}}
                           href={`https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=${classifiedJobSeq}`}
+                          target="_blank"
                         >
-                          {classifiedJobName}
-                        </a>
+                          {classifiedJobName} 
+                        </a> 
                       );
                     })}
                   </td>
@@ -252,6 +256,54 @@ function Result() {
           })}
         </thead>
       </table>
+
+      <h3>종사자 평균 전공별</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>분야</th>
+            <th>직업</th>
+          </tr>
+
+          {majorsClassNames.map((majorsClassName, majorsClassNameIdx) => {
+            const classifiedJobs = Array.from(majorsData).filter((majorsJobs) => {
+              return majorsJobs[2] === majorsClassNameIdx;
+            });
+            return (
+              <>
+                <tr
+                  style={classifiedJobs.length <= 0 ? { display: "none" } : {}}
+                >
+                  <td>{majorsClassName}</td>
+                  <td>
+                    {classifiedJobs.map((classifiedJob) => {
+                      const [classifiedMajorsJobSeq, classifiedMajorsJobName] = classifiedJob;
+                      return (
+                        <a
+                          style={{display:"inline-block", marginRight: 10}}
+                          href={`https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=${classifiedMajorsJobSeq}`}
+                          target="_blank"
+                        >
+                          {classifiedMajorsJobName} 
+                        </a> 
+                      );
+                    })}
+                  </td>
+                </tr>
+              </>
+            );
+          })}
+        </thead>
+      </table>
+
+      <div>
+        <Link to="/">
+          <button type="button">
+            다시 검사하기
+          </button>
+        </Link>
+        </div>
+
     </div>
   );
 }

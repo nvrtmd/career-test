@@ -1,5 +1,23 @@
+/* @font-face {
+  font-family: NanumSquareWeb;
+  src: local(NanumSquareR),
+       local(NanumSquare),
+       url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
+       url(NanumSquareR.woff) format('woff'),
+       url(NanumSquareR.ttf) format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  unicode-range: U+0-10FFFF;
+} */
+
+
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+KR:wght@300&display=swap');
+
+
+
 .App {
   text-align: center;
+  font-family: 'Noto Serif KR', serif;
 }
 
 .App-logo {

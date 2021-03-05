@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import "./Example.css";
 
 
 function Example() {
@@ -31,15 +32,11 @@ function Example() {
     }
 
     return (
-        <div>
+        <div className="whole_div">
             <h1>검사 예시</h1>
                 <div>
-                    <h2>직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.</h2>
+                    <h4>직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.</h4>
                 </div>
-
-            <div>
-            <h3>{question}</h3>
-            </div>
 
             <form>
                 <label>

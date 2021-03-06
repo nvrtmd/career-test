@@ -26,60 +26,58 @@ function StartPage() {
     <div className="whole_div">
       <div>
         <h1>직업 가치관 검사</h1>
-        <form>
-          <div>
-            <label className="name">이름: &nbsp;
+        <div className="info_box">
+          <form>
+            <div>
+              <label className="name">
+                이름: &nbsp;
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={handleNameChange}
+                />
+              </label>
+            </div>
+            <label className="gender_woman">
               <input
-                type="text"
-                name="name"
-                value={name}
-                onChange={handleNameChange}
+                type="radio"
+                name="gender"
+                value="100324"
+                onChange={handleGenderChange}
+                className="form-check-input"
+                checked={gender === "100324"}
               />
+              여성
             </label>
+
+            <label className="gender_man">
+              <input
+                type="radio"
+                name="gender"
+                value="100323"
+                onChange={handleGenderChange}
+                className="form-check-input"
+                checked={gender === "100323"}
+              />
+              남성
+            </label>
+          </form>
+          <br />
+
+          <div>
+            <Link to="/example">
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={!gender || !name}
+                onClick={handleSubmit}
+              >
+                다음
+              </button>
+            </Link>
           </div>
-          <label className="gender_woman">
-            <input
-              type="radio"
-              name="gender"
-              value="100324"
-              onChange={handleGenderChange}
-              className="form-check-input"
-              checked={gender === "100324"}
-            />
-            여성
-          </label>
-
-          <label className="gender_man">
-            <input
-              type="radio"
-              name="gender"
-              value="100323"
-              onChange={handleGenderChange}
-              className="form-check-input"
-              checked={gender === "100323"}
-            />
-            남성
-          </label>
-        </form>
-      </div>
-      <br />
-
-      {/* <div>
-            <h1> 성별: {gender}</h1>
-            <h3> 이름: {name}</h3>
         </div>
- */}
-      <div>
-        <Link to="/example">
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={!gender || !name}
-            onClick={handleSubmit}
-          >
-            검사 시작
-          </button>
-        </Link>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import React, { Component } from "react";
 import { NameContext, GenderContext } from "../App";
 import "./Test.css";
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 const Test = () => {
   const apiUrl = `http://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`;
@@ -94,18 +95,20 @@ const Test = () => {
       {/* {visibleQuestions.map((qitemNo)=>{
             return <div key={qitemNo.qitemNo}>{qitemNo.qitemNo}</div>
         })} */}
+        <ProgressBar now={50}/>
       <div>
-        {/* {page} */}
         {visibleQuestions.map((question) => {
           const qitemNo = parseInt(question.qitemNo, 10);
           return (
             <div className="question_box">
-              <div key={question.qitemNo}>{question.question}</div>
+              <div key={question.qitemNo}>
+                <h5 style={{ marginTop: 15 }}>{question.question}</h5>
+                </div>
               <form>
                 <div className="form-check form-check-inline">
                   <label
                     className="form-check-label"
-                    style={{ marginRight: 20, marginTop: 10 }}
+                    style={{ marginRight: 10, marginTop: 5 , marginBottom: 10}}
                   >
                     <input
                       className="form-check-input"
@@ -132,7 +135,7 @@ const Test = () => {
                     {question.answer01}
                   </label>
 
-                  <label className="form-check-label" style={{ marginTop: 10 }}>
+                  <label className="form-check-label" style={{ marginTop: 5,  marginBottom: 10 }}>
                     <input
                       className="form-check-input"
                       type="radio"
@@ -201,7 +204,7 @@ const Test = () => {
       ) : (
         <Link to="/completed">
           <button
-            className="btn btn-primary"
+            className="btn btn-secondary"
             onClick={handlePageToFinish}
             style={{ display: "inline-block", marginRight: 10 }}
             disabled={

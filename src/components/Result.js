@@ -15,6 +15,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer
 } from "recharts";
 
 function Result() {
@@ -187,14 +188,16 @@ function Result() {
   return (
     <div className="whole_div">
       <h1>직업가치관검사 결과표</h1>
-      <h5>
+      <div>
         직업가치관이란 직업을 선택할 때 영향을 끼치는 자신만의 믿음과
-        신념입니다. 따라서 여러분의 직업생활과 관련하여 포기하지 않는 무게중심의
-        역할을 한다고 볼 수 있습니다. 직업가치관검사는 여러분이 직업을 선택할 때
-        상대적으로 어떠한 가치를 중요하게 생각하는지를 알려줍니다. 또한 본인이
-        가장 중요하게 생각하는 가치를 충족시켜줄 수 있는 직업에 대해 생각해 볼
+        신념입니다. <br/>
+        따라서 여러분의 직업생활과 관련하여 포기하지 않는 무게중심의
+        역할을 한다고 볼 수 있습니다. <br/>
+        직업가치관검사는 여러분이 직업을 선택할 때
+        상대적으로 어떠한 가치를 중요하게 생각하는지를 알려줍니다.<br/> 
+        또한 본인이 가장 중요하게 생각하는 가치를 충족시켜줄 수 있는 직업에 대해 생각해 볼
         기회를 제공합니다.
-      </h5>
+      </div>
 
       <table className="table table-bordered">
       <thead className="thead-dark">
@@ -222,10 +225,17 @@ function Result() {
       {/* <h4>{apiUrlNo1}</h4>
       <h4>{apiUrlNo2}</h4>
  */}
+
+<br />
+<br />
+<br />
       <h2>직업가치관결과</h2>
+      <div style={{ width: '100%', height: 400 }}>
+        <ResponsiveContainer>
+
       <BarChart
-        width={1000}
-        height={400}
+        // width={1000}
+        // height={400}
         data={chartData}
         margin={{
           top: 5,
@@ -238,8 +248,14 @@ function Result() {
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="score" fill="#66CDAA" />
+        <Bar dataKey="score" fill="#94A7EC" />
       </BarChart>
+      </ResponsiveContainer>
+      </div>
+      <br />
+<br />
+<br />
+
       <h2>가치관과 관련이 높은 직업</h2>
       <br/>
       <h3>종사자 평균 학력별</h3>
@@ -270,7 +286,7 @@ function Result() {
                   const [classifiedJobSeq, classifiedJobName] = classifiedJob;
                   return (
                     <a
-                      style={{ display: "inline-block", marginRight: 10, color: '#20B2AA' }}
+                      style={{ display: "inline-block", marginRight: 10, color: '#8496D6' }}
                       href={`https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=${classifiedJobSeq}`}
                       target="_blank"
                     >
@@ -314,7 +330,7 @@ function Result() {
                   ] = classifiedJob;
                   return (
                     <a
-                      style={{ display: "inline-block", marginRight: 10 , color: '#20B2AA'}}
+                      style={{ display: "inline-block", marginRight: 10 , color: '#8496D6'}}
                       href={`https://www.career.go.kr/cnet/front/base/job/jobView.do?SEQ=${classifiedMajorsJobSeq}`}
                       target="_blank"
                     >
@@ -330,7 +346,7 @@ function Result() {
         <br/>
       <div>
         <Link to="/">
-          <button type="button" className="btn btn-primary" onClick={handleRestart}>
+          <button type="button" className="btn btn-outline-success" onClick={handleRestart}>
             다시 검사하기
           </button>
         </Link>

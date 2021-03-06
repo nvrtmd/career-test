@@ -1,23 +1,36 @@
 /* @font-face {
-  font-family: NanumSquareWeb;
-  src: local(NanumSquareR),
-       local(NanumSquare),
-       url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
-       url(NanumSquareR.woff) format('woff'),
-       url(NanumSquareR.ttf) format('truetype');
-  font-style: normal;
+  font-family: 'Cafe24Oneprettynight';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
   font-weight: normal;
-  unicode-range: U+0-10FFFF;
+  font-style: normal;
+}
+ */
+/* @font-face {
+  font-family: 'ELAND_Nice_M';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/ELAND_Nice_M.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+ */
+
+/* @font-face {
+  font-family: 'Y_Spotlight';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/Y_Spotlight.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 } */
 
 
-@import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+KR:wght@300&display=swap');
-
+@font-face {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 
 .App {
   text-align: center;
-  font-family: 'Noto Serif KR', serif;
 }
 
 .App-logo {

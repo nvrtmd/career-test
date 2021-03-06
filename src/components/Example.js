@@ -1,77 +1,91 @@
-import React, {useState, useEffect, useContext} from "react";
-import axios from 'axios';
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import "./Example.css";
 
-
 function Example() {
-
-    const [question, setQuestion] = useState("")
-    const [exAnswer1, setAnswer1] = useState("")
-    const [exAnswer2, setAnswer2] = useState("")
-    const [exChecked, setChecked] = useState("")
-    const apiUrl = `https://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`
-    useEffect(() => {
-        async function exQuestion(){
-            const response = await axios.get(
-               apiUrl
-            );
-            setQuestion(response.data.RESULT[0].question);
-            setAnswer1(response.data.RESULT[0].answer01);
-            setAnswer2(response.data.RESULT[0].answer02);
-        }
-        exQuestion();
-    }, [])
-
-    const handleCheckedChange = event => {
-        console.log(event.target.value)
-        setChecked(event.target.value)
+  const [question, setQuestion] = useState("");
+  const [exAnswer1, setAnswer1] = useState("");
+  const [exAnswer2, setAnswer2] = useState("");
+  const [exChecked, setChecked] = useState("");
+  const apiUrl = `https://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`;
+  useEffect(() => {
+    async function exQuestion() {
+      const response = await axios.get(apiUrl);
+      setQuestion(response.data.RESULT[0].question);
+      setAnswer1(response.data.RESULT[0].answer01);
+      setAnswer2(response.data.RESULT[0].answer02);
     }
-    const handleSubmit = () => {
-        console.log("submitted!");
-    }
+    exQuestion();
+  }, []);
 
-    return (
-        <div className="whole_div">
-            <h1>검사 예시</h1>
-                <div>
-                    <h4>직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.</h4>
-                </div>
+  const handleCheckedChange = (event) => {
+    console.log(event.target.value);
+    setChecked(event.target.value);
+  };
+  const handleSubmit = () => {
+    console.log("submitted!");
+  };
 
-            <form>
-                <label>
-                    <input type="radio" name="ex1" value="능력발휘" onChange={handleCheckedChange}></input>
-                        {exAnswer1}
-                </label>
+  return (
+    <div className="whole_div">
+      <h1>검사 예시</h1>
+      <div>
+        <h4>
+          직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.
+        </h4>
+      </div>
 
-                <label>
-                    <input type="radio" name="ex1" value="자율성" onChange={handleCheckedChange}></input>
-                    {exAnswer2}
-                </label>
-            </form>
+      <form>
+        <label className="sample_no1">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="ex1"
+            value="능력발휘"
+            onChange={handleCheckedChange}
+          ></input>
+          {exAnswer1}
+        </label>
 
-            {/* <div>
+        <label className="sample_no2">
+          <input
+            className="form-check-input"
+            type="radio"
+            name="ex1"
+            value="자율성"
+            onChange={handleCheckedChange}
+          ></input>
+          {exAnswer2}
+        </label>
+      </form>
+
+      {/* <div>
                 <h1> {exChecked}</h1>
             </div> */}
 
-            <div>
-                <Link to="/">
-                    <button>
-                        이전
-                    </button>
-                </Link>
-            </div>
-
-            <div>
-                <Link to="/test">
-                <button type="submit" disabled={!exChecked} onClick={handleSubmit} >
-                검사 시작
-                </button>
-                </Link>
-            </div>
-        </div>
-    );
+      <div>
+        <Link to="/">
+          <button
+            className="btn btn-info"
+            style={{ display: "inline-block", marginRight: 10 }}
+          >
+            이전
+          </button>
+        </Link>
+        <Link to="/test">
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={!exChecked}
+            onClick={handleSubmit}
+          >
+            검사 시작
+          </button>
+        </Link>
+      </div>
+    </div>
+  );
 }
-
 
 export default Example;

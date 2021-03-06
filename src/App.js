@@ -6,6 +6,7 @@ import Test from "./components/Test";
 import Completed from "./components/Completed";
 import Result from "./components/Result";
 import {createContext, useState} from "react"
+import './App.css';
 
 const NameContext = createContext({});
 const GenderContext = createContext({});

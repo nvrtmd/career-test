@@ -3,8 +3,9 @@
   width: 100%;
   max-width: 1200px;
   margin: 50px auto;
+  
+  font-family: 'GmarketSansMedium';
 }
-
 .name {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -15,11 +16,11 @@
 .gender_woman {
   /* margin-top: 20px; */
   margin-right: 15px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }
 
 .gender_man {
   /* margin-top: 20px; */
   margin-left: 15px;
-  vertical-align: middle;
+  /* vertical-align: middle; */
 }

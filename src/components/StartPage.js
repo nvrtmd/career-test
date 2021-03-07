@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { NameContext, GenderContext } from "../App";
 import "./StartPage.css";
+import Comment from "./Comment";
 
 function StartPage() {
   //   const [name, setName] = useState("");
@@ -83,8 +84,12 @@ function StartPage() {
           </div>
         </div>
       </div>
-      <h2>댓글</h2>
+      <br />
+      <br />
+      <br />
       
+      <h3>Comments</h3>
+      <Comment />
     </div>
   );
 }

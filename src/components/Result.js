@@ -121,14 +121,15 @@ function Result() {
 
   const getJobsResult = useCallback(async () => {
     const jobsRes = await axios.get(apiJobsUrl);
+    console.log(jobsRes)
     setJobsData(jobsRes.data);
-    console.log(jobsData);
   }, [apiJobsUrl]);
 
   const getMajorsResult = useCallback(async () => {
     const majorsRes = await axios.get(apiMajorsUrl);
+    console.log(majorsRes)
+
     setMajorsData(majorsRes.data);
-    console.log(majorsData);
   }, [apiMajorsUrl]);
 
   useEffect(() => {
@@ -198,7 +199,10 @@ function Result() {
         또한 본인이 가장 중요하게 생각하는 가치를 충족시켜줄 수 있는 직업에 대해 생각해 볼
         기회를 제공합니다.
       </div>
-
+      {/* <div>
+        {apiUrlNo1}, {apiUrlNo2}
+        
+      </div> */}
       <table className="table table-bordered">
       <thead className="thead-dark">
           <tr>

@@ -95,7 +95,7 @@ const Test = () => {
       {/* {visibleQuestions.map((qitemNo)=>{
             return <div key={qitemNo.qitemNo}>{qitemNo.qitemNo}</div>
         })} */}
-        <ProgressBar now={50}/>
+        {/* <ProgressBar now={50}/> */}
       <div>
         {visibleQuestions.map((question) => {
           const qitemNo = parseInt(question.qitemNo, 10);

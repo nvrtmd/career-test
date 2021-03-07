@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Example.css";
+import ProgressBar from "react-bootstrap/ProgressBar";
 
 function Example() {
   const [question, setQuestion] = useState("");
@@ -26,13 +27,20 @@ function Example() {
   const handleSubmit = () => {
     console.log("submitted!");
   };
+  const now = 0;
+  const progressBar = <ProgressBar now={now} label={`${now}%`} />;
 
   return (
     <div className="whole_div">
+      {/* <div className="ex_progress_bar">
+      <ProgressBar now={0} />
+      </div> */}
+      {/* <div>{now}</div> */}
+      <div className="ex_progress_bar">{progressBar}</div>
+      <br />
       <h2>검사 예시</h2>
       <div className="ex_question_box">
-        <h5
-        style={{marginTop: '8px'}}>
+        <h5 style={{ marginTop: "8px" }}>
           직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.
         </h5>
         <form>
@@ -60,7 +68,7 @@ function Example() {
         </form>
       </div>
       <div>
-      <br />
+        <br />
 
         <Link to="/">
           <button

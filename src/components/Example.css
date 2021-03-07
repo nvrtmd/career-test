@@ -31,3 +31,8 @@
   text-align: center;
 
 }
+
+.ex_progress_bar {
+  margin: 0 auto;
+  width: 800px;
+ }

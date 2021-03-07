@@ -9,17 +9,18 @@ function StartPage() {
   const { gender, setGender } = useContext(GenderContext);
   //   const [gender, setGender] = useState("");
   // const user = useContext(userInfo)
+  // const [errorMessage, setErrorMessage] = useState("이름과 성별을 입력하세요.");
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    setName(event.target.value)
   };
 
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log("submitted!");
+  const handleSubmit = (event) => {
+    console.log(event.target.value);
   };
 
   return (
@@ -35,6 +36,7 @@ function StartPage() {
                   type="text"
                   name="name"
                   value={name}
+                  placeholder="이름을 입력하세요"
                   onChange={handleNameChange}
                 />
               </label>
@@ -63,8 +65,10 @@ function StartPage() {
               남성
             </label>
           </form>
+          {/* <div class="alert alert-success" role="alert">
+            {errorMessage}
+          </div> */}
           <br />
-
           <div>
             <Link to="/example">
               <button
@@ -79,6 +83,8 @@ function StartPage() {
           </div>
         </div>
       </div>
+      <h2>댓글</h2>
+      
     </div>
   );
 }

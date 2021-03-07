@@ -5,6 +5,8 @@ import { Link, useHistory } from "react-router-dom";
 // import Example from "./components/Example";
 import React, { Component } from "react";
 import { NameContext, GenderContext } from "../App";
+import "./Test.css";
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 const Test = () => {
   const apiUrl = `http://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`;
@@ -88,85 +90,107 @@ const Test = () => {
   };
 
   return (
-    <div>
+    <div className="whole_div">
       {/* {JSON.stringify(questions)} */}
       {/* {visibleQuestions.map((qitemNo)=>{
             return <div key={qitemNo.qitemNo}>{qitemNo.qitemNo}</div>
         })} */}
+        <ProgressBar now={50}/>
       <div>
-        {/* {page} */}
         {visibleQuestions.map((question) => {
           const qitemNo = parseInt(question.qitemNo, 10);
           return (
-            <div>
-              <div key={question.qitemNo}>{question.question}</div>
+            <div className="question_box">
+              <div key={question.qitemNo}>
+                <h5 style={{ marginTop: 15 }}>{question.question}</h5>
+                </div>
               <form>
-                <label>
-                  <input
-                    type="radio"
-                    name={qitemNo}
-                    value={question.answerScore01}
-                    onChange={() => {
-                      setAnswChecked((current) => {
-                        const newAnswChecked = [...current];
-                        newAnswChecked[qitemNo - 1] = parseInt(
-                          question.answerScore01,
-                          10
-                        );
-                        // setCountAnswChecked(newAnswChecked);
-                        console.log(newAnswChecked);
-                        return newAnswChecked;
-                      });
-                    }}
-                    checked={
-                      answChecked[qitemNo - 1] ===
-                      parseInt(question.answerScore01, 10)
-                    }
-                  ></input>
-                  {question.answer01}
-                </label>
+                <div className="form-check form-check-inline">
+                  <label
+                    className="form-check-label"
+                    style={{ marginRight: 10, marginTop: 5 , marginBottom: 10}}
+                  >
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name={qitemNo}
+                      value={question.answerScore01}
+                      onChange={() => {
+                        setAnswChecked((current) => {
+                          const newAnswChecked = [...current];
+                          newAnswChecked[qitemNo - 1] = parseInt(
+                            question.answerScore01,
+                            10
+                          );
+                          // setCountAnswChecked(newAnswChecked);
+                          console.log(newAnswChecked);
+                          return newAnswChecked;
+                        });
+                      }}
+                      checked={
+                        answChecked[qitemNo - 1] ===
+                        parseInt(question.answerScore01, 10)
+                      }
+                    ></input>
+                    {question.answer01}
+                  </label>
 
-                <label>
-                  <input
-                    type="radio"
-                    name={"B" + qitemNo}
-                    value={question.answerScore02}
-                    onChange={() => {
-                      setAnswChecked((current) => {
-                        const newAnswChecked = [...current];
-                        newAnswChecked[qitemNo - 1] = parseInt(
-                          question.answerScore02,
-                          10
-                        );
-                        // setCountAnswChecked(newAnswChecked);
-                        console.log(newAnswChecked);
-                        return newAnswChecked;
-                      });
-                    }}
-                    checked={
-                      answChecked[qitemNo - 1] ===
-                      parseInt(question.answerScore02, 10)
-                    }
-                  ></input>
-                  {question.answer02}
-                </label>
+                  <label className="form-check-label" style={{ marginTop: 5,  marginBottom: 10 }}>
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name={"B" + qitemNo}
+                      value={question.answerScore02}
+                      onChange={() => {
+                        setAnswChecked((current) => {
+                          const newAnswChecked = [...current];
+                          newAnswChecked[qitemNo - 1] = parseInt(
+                            question.answerScore02,
+                            10
+                          );
+                          // setCountAnswChecked(newAnswChecked);
+                          console.log(newAnswChecked);
+                          return newAnswChecked;
+                        });
+                      }}
+                      checked={
+                        answChecked[qitemNo - 1] ===
+                        parseInt(question.answerScore02, 10)
+                      }
+                    ></input>
+                    {question.answer02}
+                  </label>
+                </div>
               </form>
             </div>
           );
         })}
+        <br />
       </div>
       {page > 0 ? (
-        <button onClick={handlePagePrev}>이전</button>
+        <button
+          className="btn btn-info"
+          onClick={handlePagePrev}
+          style={{ display: "inline-block", marginRight: 10 }}
+        >
+          이전
+        </button>
       ) : (
         <Link to="/example">
-          <button>이전</button>
+          <button
+            className="btn btn-info"
+            style={{ display: "inline-block", marginRight: 10 }}
+          >
+            이전
+          </button>
         </Link>
       )}
 
-      {/* <button onClick={handlePagePrev}>이전</button> */}
       {page < 5 ? (
         <button
+          className="btn btn-primary"
           onClick={handlePageNext}
+          style={{ display: "inline-block", marginRight: 10 }}
           disabled={
             countAnswChecked != 0 &&
             countAnswChecked % 5 === 0 &&
@@ -180,7 +204,9 @@ const Test = () => {
       ) : (
         <Link to="/completed">
           <button
+            className="btn btn-secondary"
             onClick={handlePageToFinish}
+            style={{ display: "inline-block", marginRight: 10 }}
             disabled={
               countAnswChecked != 0 && countAnswChecked % 7 === 0 ? false : true
             }

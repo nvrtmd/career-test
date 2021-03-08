@@ -2,14 +2,13 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { NameContext, GenderContext } from "../App";
 import "./StartPage.css";
+import Comment from "./Comment";
 
 function StartPage() {
-  //   const [name, setName] = useState("");
   const { name, setName } = useContext(NameContext);
   const { gender, setGender } = useContext(GenderContext);
-  //   const [gender, setGender] = useState("");
-  // const user = useContext(userInfo)
 
+  //이벤트로 이름과 성별 설정
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
@@ -18,8 +17,8 @@ function StartPage() {
     setGender(event.target.value);
   };
 
-  const handleSubmit = () => {
-    console.log("submitted!");
+  const handleSubmit = (event) => {
+    console.log(event.target.value);
   };
 
   return (
@@ -35,6 +34,7 @@ function StartPage() {
                   type="text"
                   name="name"
                   value={name}
+                  placeholder="이름을 입력하세요"
                   onChange={handleNameChange}
                 />
               </label>
@@ -64,7 +64,7 @@ function StartPage() {
             </label>
           </form>
           <br />
-
+          {/* 삼항 연산자와 disabled로 버튼 조건부 활성화 될 수 있게 함 */}
           <div>
             <Link to="/example">
               <button
@@ -79,6 +79,11 @@ function StartPage() {
           </div>
         </div>
       </div>
+      <br />
+      <br />
+      <br />
+      <h3>Comments</h3>
+      <Comment />
     </div>
   );
 }

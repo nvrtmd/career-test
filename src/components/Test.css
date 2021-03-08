@@ -17,3 +17,8 @@
   text-align: center;
 
 }
+
+.test_progress_bar {
+  margin: 0 auto;
+  width: 800px
+ }

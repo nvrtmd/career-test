@@ -8,6 +8,7 @@ import Result from "./components/Result";
 import {createContext, useState} from "react"
 import './App.css';
 
+//useContext 사용하여 사용자 이름, 성별 입력받아 사용
 const NameContext = createContext({});
 const GenderContext = createContext({});
 

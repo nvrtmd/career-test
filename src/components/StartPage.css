@@ -3,8 +3,8 @@
   width: 100%;
   max-width: 1200px;
   margin: 50px auto;
-  
-  font-family: 'GmarketSansMedium';
+
+  font-family: "GmarketSansMedium";
 }
 .name {
   margin-top: 10px;
@@ -14,15 +14,11 @@
   text-align: center;
 }
 .gender_woman {
-  /* margin-top: 20px; */
   margin-right: 15px;
-  /* vertical-align: middle; */
 }
 
 .gender_man {
-  /* margin-top: 20px; */
   margin-left: 15px;
-  /* vertical-align: middle; */
 }
 
 .info_box {
@@ -32,8 +28,7 @@
   border-width: 2px;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   max-width: 100%;
   text-align: center;
-
 }

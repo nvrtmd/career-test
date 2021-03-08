@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useMemo, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-// import StartPage from "./components/StartPage";
-// import Example from "./components/Example";
 import React, { Component } from "react";
 import { NameContext, GenderContext } from "../App";
 import "./Test.css";
@@ -17,8 +15,6 @@ const Test = () => {
   const [questions, setQuestions] = useState([]);
   const [page, setPage] = useState(0);
   const [answChecked, setAnswChecked] = useState([]);
-  // const [countAnswChecked,setCountAnswChecked] = useState();
-  // const [result, setResult] = useState();
   const history = useHistory();
 
   const fetchQuestions = useCallback(async () => {
@@ -26,13 +22,13 @@ const Test = () => {
     setQuestions(response.data.RESULT);
   }, [apiUrl]);
 
-  const visibleQuestions = useMemo(() => {
-    return questions.slice(page * 5, (page + 1) * 5);
-  }, [page, questions]);
-
   useEffect(() => {
     fetchQuestions();
   }, [fetchQuestions]);
+
+  const visibleQuestions = useMemo(() => {
+    return questions.slice(page * 5, (page + 1) * 5);
+  }, [page, questions]);
 
   const countAnswChecked = useMemo(() => {
     let count = 0;
@@ -55,18 +51,16 @@ const Test = () => {
       return current - 1;
     });
     const idx = page * 5;
-    setAnswChecked((current) => {
+    setAnswChecked(() => {
       const newAnswChecked = [];
       for (var i = 0; i < idx; i++) {
         newAnswChecked[i] = answChecked[i];
       }
       return newAnswChecked;
     });
-    // console.log(answChecked)
   };
 
   const handlePageToFinish = async () => {
-    //제출 버튼 클릭 시 post할 수 있게
     const res = await axios.post(
       apiPostUrl,
       {
@@ -75,7 +69,7 @@ const Test = () => {
         trgetSe: "100209",
         name: name,
         gender: gender,
-        startDtm: new Date().getTime(),
+        startDtm: String(new Date().getTime()),
         answers: answChecked
           .map((item, index) => {
             return "B" + (index + 1) + "=" + item;
@@ -85,7 +79,6 @@ const Test = () => {
       { headers: { "Content-Type": "application/json" } }
     );
     const seq = res.data.RESULT.url.split("seq=").pop();
-    //사용자의 주소를 /result/:seq로 이동시킨다
     history.push("/completed/" + seq);
   };
 
@@ -105,7 +98,6 @@ const Test = () => {
   return (
     <div className="whole_div">
       <div className="test_progress_bar">{progressBar}</div>
-
       <div>
         {visibleQuestions.map((question) => {
           const qitemNo = parseInt(question.qitemNo, 10);
@@ -132,8 +124,6 @@ const Test = () => {
                             question.answerScore01,
                             10
                           );
-                          // setCountAnswChecked(newAnswChecked);
-                          console.log(newAnswChecked);
                           return newAnswChecked;
                         });
                       }}
@@ -161,8 +151,6 @@ const Test = () => {
                             question.answerScore02,
                             10
                           );
-                          // setCountAnswChecked(newAnswChecked);
-                          console.log(newAnswChecked);
                           return newAnswChecked;
                         });
                       }}

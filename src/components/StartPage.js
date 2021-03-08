@@ -5,15 +5,12 @@ import "./StartPage.css";
 import Comment from "./Comment";
 
 function StartPage() {
-  //   const [name, setName] = useState("");
   const { name, setName } = useContext(NameContext);
   const { gender, setGender } = useContext(GenderContext);
-  //   const [gender, setGender] = useState("");
-  // const user = useContext(userInfo)
-  // const [errorMessage, setErrorMessage] = useState("이름과 성별을 입력하세요.");
 
+  //이벤트로 이름과 성별 설정
   const handleNameChange = (event) => {
-    setName(event.target.value)
+    setName(event.target.value);
   };
 
   const handleGenderChange = (event) => {
@@ -66,10 +63,8 @@ function StartPage() {
               남성
             </label>
           </form>
-          {/* <div class="alert alert-success" role="alert">
-            {errorMessage}
-          </div> */}
           <br />
+          {/* 삼항 연산자와 disabled로 버튼 조건부 활성화 될 수 있게 함 */}
           <div>
             <Link to="/example">
               <button
@@ -87,7 +82,6 @@ function StartPage() {
       <br />
       <br />
       <br />
-      
       <h3>Comments</h3>
       <Comment />
     </div>

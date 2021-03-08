@@ -10,6 +10,7 @@ function Example() {
   const [exAnswer2, setAnswer2] = useState("");
   const [exChecked, setChecked] = useState("");
   const apiUrl = `https://www.career.go.kr/inspct/openapi/test/questions?apikey=ad5bf9f6a1f7c1af90eff9aed50ee117&q=6`;
+
   useEffect(() => {
     async function exQuestion() {
       const response = await axios.get(apiUrl);
@@ -24,18 +25,16 @@ function Example() {
     console.log(event.target.value);
     setChecked(event.target.value);
   };
+
   const handleSubmit = () => {
     console.log("submitted!");
   };
+
   const now = 0;
   const progressBar = <ProgressBar now={now} label={`${now}%`} />;
 
   return (
     <div className="whole_div">
-      {/* <div className="ex_progress_bar">
-      <ProgressBar now={0} />
-      </div> */}
-      {/* <div>{now}</div> */}
       <div className="ex_progress_bar">{progressBar}</div>
       <br />
       <h2>검사 예시</h2>
@@ -69,7 +68,6 @@ function Example() {
       </div>
       <div>
         <br />
-
         <Link to="/">
           <button
             className="btn btn-info"
